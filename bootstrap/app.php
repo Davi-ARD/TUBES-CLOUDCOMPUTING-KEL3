@@ -11,7 +11,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        // Percayai Application Load Balancer sebagai proxy agar Laravel
+        // mendeteksi skema HTTPS dari header X-Forwarded-Proto, sehingga
+        // tautan aset (CSS/JS) dibuat dengan skema yang benar.
+        $middleware->trustProxies(at: '*');
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
